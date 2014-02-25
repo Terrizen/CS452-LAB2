@@ -20,8 +20,8 @@ GLfloat colorarray[]={1.0f,1.0f,0.0f,1.0f,//color array
 void init(){
 
   ShaderInfo shaders[]={
-  { GL_VERTEX_SHADER , "vertexshader.glsl"} ,
-  { GL_FRAGMENT_SHADER , "fragmentshader.glsl"},
+  { GL_VERTEX_SHADER , "vertex_shader.glsl"} ,
+  { GL_FRAGMENT_SHADER , "fragment_shader.glsl"},
   { GL_NONE , NULL} 
   };
 
