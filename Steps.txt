@@ -1,0 +1,17 @@
+Steps.txt
+So the point of this lab was to create an Initial Shader for our previous lab.
+Step 1 - add the #ifndef, the #define, and the #includes that are needed for the Shader.
+
+Next step was to create a struct that included the GL vertex and fragment Shader variable as well as adding the a variable for the file name. once we do that we need to create the the shaders for the program.
+
+I decided to use a vector it initialize the list of shaders and used a while loop to loop all the shaders into the list. after that i created a program that linked all the shaders in the list. After that i then installed the program as part of the current rendering state. 
+
+The next thing i did was use make a function that loads the shader from the vertex. I opened the fragment shader file and checked to see if the file opened. once i opened the file i read the file into the shader. I also checked to see if the file was empty. once i read in the file i closed it.
+
+The next step was creating a "create shader" function to creat the shader. this function will create the shader base on either the vertex shader or the fragment shader. It will then load the the source code of the file into the shader. Next it will compile the object, check the compile status, and will return the compile status. The program will then check to see if the shader compiled.
+
+If it didn't compile we need to know where the shader bugged so we can debug it. we can make an array to store the memory of the bugged info that needs to be debugged. with this array we can determine which shaders bugged during the compile. We can also create a print command to print the information that we need to debug the shader. after that we can delete the bugged memory and return the shader.
+
+the next function we need to create is one that will link the shaders. first we are going to need to attach the shaders to this program. we can call the list vector and use the "glAttachShader" to attach the program. next we need to bind the local of the "position and color" attributes to the program.Once we do that we can link this program with our program.
+
+We need to check to see if every shader linked to the program. to do this we need to check for bugs like we did when we compiled. if the program didn't link to our program we then need to create an array to store our bugged info. once we stored the info we can then use a print command to let us know that our link failed. after that we can delete the debugged memory. once we delete the bad memory we can then use a for loop to delete the memory for the list of shaders and return the program.
