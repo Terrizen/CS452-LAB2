@@ -1,7 +1,6 @@
 #ifndef INITSHADERS_H_
 #define INITSHADERS_H_
 
-//#include "SDL2/SDL.h"
 #include "GL/glew.h"
 #include "GL/freeglut.h"
 #include "GL/gl.h"
@@ -17,12 +16,12 @@ const GLchar* inputShader(const char* file_name);
 GLuint createProgram(const vector<GLuint> shade_list);
 
 typedef struct{
-  GLenum type;// GL_VERTEX_SHADER or GL_FRAGMENT_SHADER
+  GLenum type;
   const char* file_name;
-} Shader_info;
+} ShaderInfo;
 
-//create the shaders for the program
-void initShaders(Shader_info* shaders){
+
+void initShaders(ShaderInfo* shaders){
   
   ShaderInfo* shade=shaders;
   vector<GLuint> Shade_list;
@@ -31,15 +30,15 @@ void initShaders(Shader_info* shaders){
     Shade_list.push_back(createShader(shade->type,inputShader(shade->file_name)));
   }
   
-  GLuint program=createProgram(Shade_list);//creates the program linking all the shaders
+  GLuint program=createProgram(Shade_list);
   
-  glUseProgram(program);//installs a program object as part of current rendering state
+  glUseProgram(program);
 }
 
 
 const GLchar* inputShader(const char* file_name){
 
-  FILE* fshade = fopen(file_name, "rb");//opens file
+  FILE* fshade = fopen(file_name, "rb");
   
   if(!fshade){
     fprintf(stderr,"unable to open file '%s'\n",file_name);
@@ -51,7 +50,7 @@ const GLchar* inputShader(const char* file_name){
   fseek(fshade, 0, SEEK_SET);
   
   
-  GLchar* shading_source= new GLchar[file_size+1];//
+  GLchar* shading_source= new GLchar[file_size+1];
   fread(shading_source, 1, file_size, fshade);
   
   
@@ -68,7 +67,7 @@ const GLchar* inputShader(const char* file_name){
   
 }
 
-//this function creates the shader
+
 GLuint createShader(GLenum type, const GLchar* shade_source){
   
   GLuint shader = glCreateShader(type);
@@ -92,7 +91,7 @@ GLuint createShader(GLenum type, const GLchar* shade_source){
       case GL_GEOMETRY_SHADER_EXT: shade_info = "geometric"; break;
       case GL_FRAGMENT_SHADER: shade_info = "fragment"; break;
     }
-    fprintf(stderr,"\nCompile failure in %u shader: %s\n Error message:\n%s\n",type,shadeInfo,infoLog);//prints information need to debug shaders
+    fprintf(stderr,"\nCompile failure in %u shader: %s\n Error message:\n%s\n",type,shadeInfo,infoLog);
     delete[] info_log;
   }
   return shader;
