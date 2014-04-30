@@ -1,5 +1,6 @@
 #ifndef INITSHADERS_H_
 #define INITSHADERS_H_
+#endif
 
 #include "GL/glew.h"
 #include "GL/freeglut.h"
@@ -28,6 +29,7 @@ void initShaders(ShaderInfo* shaders){
   
   while(shade->type != GL_NONE){
     Shade_list.push_back(createShader(shade->type,inputShader(shade->file_name)));
+    ++shade;
   }
   
   GLuint program=createProgram(Shade_list);
@@ -61,7 +63,7 @@ const GLchar* inputShader(const char* file_name){
 
   fclose(fshade);
   
-  shading_source[filesize] = 0;
+  shading_source[file_size] = 0;
   
   return const_cast<const GLchar*>(shading_source);
   
@@ -71,7 +73,7 @@ const GLchar* inputShader(const char* file_name){
 GLuint createShader(GLenum type, const GLchar* shade_source){
   
   GLuint shader = glCreateShader(type);
-  glShaderSource(shader, 1, &shadeSource, NULL);
+  glShaderSource(shader, 1, &shade_source, NULL);
   
   glCompileShader(shader);
   
@@ -80,9 +82,9 @@ GLuint createShader(GLenum type, const GLchar* shade_source){
   
   if(!compileStatus){
     GLint log_size;
-    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_Size);
+    glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &log_size);
     
-    GLchar* info_log = new GLchar[log_Size+1];
+    GLchar* info_log = new GLchar[log_size+1];
     glGetShaderInfoLog(shader,log_size,&log_size,info_log);
     
     const char *shade_info= NULL;
@@ -91,7 +93,7 @@ GLuint createShader(GLenum type, const GLchar* shade_source){
       case GL_GEOMETRY_SHADER_EXT: shade_info = "geometric"; break;
       case GL_FRAGMENT_SHADER: shade_info = "fragment"; break;
     }
-    fprintf(stderr,"\nCompile failure in %u shader: %s\n Error message:\n%s\n",type,shadeInfo,infoLog);
+    fprintf(stderr,"\nCompile failure in %u shader: %s\n Error message:\n%s\n",type,shade_info,info_log);
     delete[] info_log;
   }
   return shader;
@@ -104,7 +106,7 @@ GLuint createProgram(const vector<GLuint> shade_list){
   for(GLuint i=0;i<shade_list.size();i++){glAttachShader(program,shade_list[i]);}
   
   glBindAttribLocation(program, 0, "in_position");
-  glBindAttribLocation(program, 0, "in_color");
+  glBindAttribLocation(program, 1, "in_color");
   glLinkProgram(program);
   
   GLint link_status;
@@ -124,4 +126,3 @@ GLuint createProgram(const vector<GLuint> shade_list){
   }
   return program;
 }
-#endif
