@@ -4,17 +4,14 @@ int counter=0;
 
 GLuint vaoID, vboID[2];
 
-GLfloat vertexarray[]={0.5f,0.5f,0.0f,//vertice array
+GLfloat vertexarray[]={0.0f,0.5f,0.0f,//vertice array
 			1.0f,0.0f,0.0f,
-                       1.0f,-1.0f,0.0f, 
-                       0.0f,1.0f,0.0f,
-                       -1.0f,1.0f,0.0f
+                      - 1.0f,0.0f,0.0f, 
                        };
                        
 GLfloat colorarray[]={1.0f,1.0f,0.0f,1.0f,//color array
                        0.0f,1.0f,0.0f,1.0f,
-                       1.0f,0.0f,0.0f,1.0f,
-                       0.0f,0.0f,1.0f,1.0f
+                       1.0f,0.0f,0.0f,1.0f
                        };                       
 
 void init(){
